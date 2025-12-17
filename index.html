@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Download - SoftEther VPN Project</title>
+    <link rel="shortcut icon" href="https://www.softether.org/favicon.ico">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: "Segoe UI", "Lucida Grande", Tahoma, Verdana, Arial, sans-serif;
+            font-size: 10pt;
+            line-height: 1.7em;
+            background-color: #ffffff;
+        }
+        a { color: #0000EE; text-decoration: none; }
+
+        a:hover { text-decoration: underline; }
+        .wrap { width: 994px; margin: 0 auto; min-height: 40px; }
+        #header { background: #fff; font-size: 11px; }
+        #header table { border: 0; padding: 0; width: 100%; }
+        #header td { border: none; }
+        .search {
+    float: right;
+    margin-top: 10px;
+    font-size: 10px;
+    font-weight: bold;
+}
+
+.search fieldset {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+        .search input { border: 1px solid #ccc; padding: 3px; font-size: 11px; margin-left: 4px; }
+        .search button { font-size: 11px; }
+        #cssmenu { font-family: "Lucida Sans", Verdana, Arial, sans-serif; }
+        #cssmenu ul { list-style: none; margin: 0; padding: 0; padding-top: 0;    /* убирает верхний отступ списка */ line-height: 18px; /* поднимает текст внутри li */}
+        #cssmenu > ul > li { float: left; position: relative; margin-right: 10px; /* ← расстояние между пунктами */ }
+#cssmenu > ul > li > a {
+    display: block;
+    padding: 2px 30px;
+    background: transparent;   /* нет фона */
+    border: none;              /* нет рамки */
+    color: #000;               /* чёрный текст */
+    margin-right: 2px;
+    font-family: "Segoe UI Light", "Segoe UI", Arial, sans-serif;
+    font-size: 18px;
+    font-weight: 300;
+	white-space: nowrap; /* текст не переносится */
+}
+
+#cssmenu {
+    position: relative;
+    top: -11px; /* отрицательное смещение вверх */
+}
+
+
+#cssmenu > ul > li > a:hover {
+    background: transparent;
+    color: #000;
+    text-decoration: underline; /* можно убрать, если не надо */
+}
+
+        #cssmenu ul ul { display: none; position: absolute; top: 100%; left: 0; background: #fff; border: 1px solid #ddd; z-index: 1000; min-width: 200px; }
+        #cssmenu ul li:hover > ul { display: block; }
+        #cssmenu ul ul li { border-bottom: 1px solid #eee; }
+        #cssmenu ul ul li:last-child { border-bottom: none; }
+        #cssmenu ul ul li a { display: block; padding: 8px 12px; }
+        #cssmenu ul ul li a:hover { background: #f5f5f5; text-decoration: none; }
+        .clear { clear: both; }
+        hr { border: none; border-top: 1px solid #939393; margin: 1px 0; }
+        #body { overflow: hidden; }
+        #body .nav { width: 220px; float: left; font-size: 10px; }
+        #body .body { width: 771px; float: right; border-left: 1px solid #939393; min-height: 600px; }
+        .content { padding: 12px 18px 80px 18px; }
+        .content h1 { font-size: 38px; font-weight: 300; margin-bottom: 20px; }
+        .content h4 { font-size: 16px; font-weight: bold; margin: 20px 0 10px 0; color: #333; }
+        .content p { margin: 10px 0; }
+        .content ul { margin: 10px 0 10px 20px; }
+        .content ul li { margin: 5px 0; }
+        .link-https { font-size: 24px; }
+        .link-https.medium { font-size: 20px; }
+        #siteNavTree { font-size: 9pt; }
+        #siteNavTree .node { padding: 1px 8px; border-bottom: 1px solid #ccc; /* добавляет линию */}
+        #siteNavTree .node a { color: #444; display: block; }
+        #siteNavTree .node.selected a { font-weight: bold; }
+        #siteNavTree .node.selectedChild { padding-left: 20px; }
+        .pageToc { font-size: 11px; margin-top: 20px; }
+        .pageToc h5 { background: #c3c3c3; padding: 0px 8px; margin: 0; font-size: 13px; font-weight: bold; color: #444444;        /* серый цвет текста *//* увеличенный размер шрифта */}
+        .pageToc .tocdata { padding: 8px; }
+        .pageToc ol { list-style: none; }
+        .pageToc li { margin: 4px 0; }
+        #footer { margin: 8px 6px; padding-bottom: 12px; font-size: 11px; overflow: hidden; }
+        #footer .product { float: right; text-align: right; }
+        #footer .sitenav { float: left; }
+        img.rwrap { float: right; margin: 0 0 10px 20px; }
+
+        /* Login Modal Styles */
+        .login-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+        }
+        .login-overlay.active { display: flex; }
+        .login-modal {
+            background: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            width: 350px;
+            max-width: 90%;
+        }
+        .login-modal h2 {
+            margin: 0 0 20px 0;
+            font-size: 20px;
+            color: #333;
+            text-align: center;
+        }
+        .login-modal .form-group { margin-bottom: 15px; }
+        .login-modal label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+        .login-modal input[type="text"],
+        .login-modal input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        .login-modal input:focus {
+            outline: none;
+            border-color: #4a90d9;
+        }
+        .login-modal .btn-login {
+            width: 100%;
+            padding: 12px;
+            background: #4a90d9;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .login-modal .btn-login:hover { background: #3a7bc8; }
+        .login-modal .error-message {
+            color: #cc0000;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 15px;
+            display: none;
+        }
+        .login-modal .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 24px;
+            cursor: pointer;
+            color: #999;
+        }
+        .login-modal .close-btn:hover { color: #333; }
+        .modal-container { position: relative; }
+    </style>
+</head>
+<body>
+    <!-- Login Modal -->
+    <div class="login-overlay" id="loginOverlay">
+        <div class="login-modal">
+            <div class="modal-container">
+                <span class="close-btn" id="closeModal">&times;</span>
+                <h2>Login Required</h2>
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="login">Login</label>
+                        <input type="text" id="login" name="login" placeholder="Enter your login">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" placeholder="Enter your password">
+                    </div>
+                    <button type="submit" class="btn-login">Login</button>
+                    <div class="error-message" id="errorMessage">user not found</div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="header">
+        <div class="wrap">
+            <table>
+                <tr>
+                    <td rowspan="2" valign="top" style="padding: 3px 0;">
+                        <!-- LOGO - This link will work, user can replace href -->
+                        <a href="https://www.youtube.com/@SoftEthernetVPN" id="logoLink" data-allowed="true">
+                            <img src="logo.jpg" alt="SoftEther VPN">
+                        </a>
+                    </td>
+                    <td style="padding: 3px 0;">
+                        <div class="search">
+                            <form id="searchForm">
+                                <fieldset style="border: none;">
+                                    <input type="text" name="search" id="searchInput" placeholder="Search...">
+
+                                    <button type="submit">Search</button>
+                                </fieldset>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding: 0;">
+                        <div id="cssmenu">
+                            <ul>
+                                <li><a href="#" style="width: 35px;">Top</a></li>
+                                <li><a href="#" style="width: 170px;">Why SoftEther VPN</a>
+                                    <ul>
+                                        <li><a href="#">Introductions</a></li>
+                                        <li><a href="#">Screenshots</a></li>
+                                        <li><a href="#">Specification</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="#" style="width: 120px;">Documents</a>
+                                    <ul>
+                                        <li><a href="#">Reference Manual</a></li>
+                                        <li><a href="#">Tutorials</a></li>
+                                        <li><a href="#">FAQs and KBs</a></li>
+                                        <li><a href="#">Research Works</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="#" style="width: 110px;">Download</a>
+                                    <ul>
+                                        <li><a href="#">Download SoftEther VPN</a></li>
+                                        <li><a href="#">Version History</a></li>
+                                        <li><a href="#">Source Code</a></li>
+                                        <li><a href="#">GitHub Repository</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="#" style="width: 80px;">Support</a></li>
+                                <li><a href="#" style="width: 135px;">About Project</a></li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            <div class="clear"></div>
+        </div>
+    </div>
+
+    <div class="wrap">
+        <hr>
+        <div id="body">
+            <div class="nav">
+                <div id="siteNavTree">
+                    <div class="node"><a href="#">SoftEther VPN Project</a></div>
+                    <div class="node"><a href="#">Why SoftEther VPN</a></div>
+                    <div class="node"><a href="#">Screenshots</a></div>
+                    <div class="node"><a href="#">Specification</a></div>
+                    <div class="node"><a href="#">Documents</a></div>
+                    <div class="node selected"><a href="#">Download</a></div>
+                    <div class="node selectedChild"><a href="#">Version History (ChangeLog)</a></div>
+                    <div class="node selectedChild"><a href="#">Source Code</a></div>
+                    <div class="node"><a href="#">Support &amp; Forum</a></div>
+                    <div class="node"><a href="#">About SoftEther VPN Project</a></div>
+                </div>
+                <div class="pageToc">
+                    <h5>Table of contents</h5>
+                    <div class="tocdata">
+                        <ol>
+                            <li><span>1.</span> <a href="#">Primary Download Server</a></li>
+                            <li><span>2.</span> <a href="#">Download from CNET</a></li>
+                            <li><span>3.</span> <a href="#">Download from Softpedia</a></li>
+                            <li><span>4.</span> <a href="#">See also</a></li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+            <div class="body">
+                <div class="content">
+                    <h1 style="font-size: 40px; margin-top: 42px;">Download</h1>
+                    <div class="text">
+                        <p>SoftEther VPN is <a href="#">open-source free software</a>. You may use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of SoftEther VPN.</p>
+
+                        <h4 style="margin-top: 25px;">Primary Download Server (hosted by Windows Azure):</h4>
+                        <ul>
+                            <li style="padding-left: 3px; list-style-position: inside;">
+                                <!-- DOWNLOAD LINK 1 - User can replace href -->
+                                <a class="link-https" href="https://www.softether-download.com/?product=softether" target="_blank" data-allowed="true">Download SoftEther VPN</a>
+                            </li>
+                        </ul>
+                        <p style="margin-left: 40px; color: rgb(47,79,79);"><em>Language: English, Japanese and Simplified Chinese.<br>OS: Windows, Linux, Mac OS X, FreeBSD and Solaris.</em></p>
+
+                        <h4 style="margin-top: 60px;">Download from CNET Download.com:</h4>
+
+<ul>
+    <li style="padding-left: 3px; list-style-position: inside;">
+        <a class="link-https medium" href="http://www.softpedia.com/dyn-search.php?search_term=softether&x=5&y=6" target="_blank" data-allowed="true">Download SoftEther VPN from CNET Download.com</a>
+    </li>
+</ul>
+
+
+                        <h4 style="margin-top: 60px;">Download from Softpedia.com:</h4>
+                        <ul>
+                            <li style="padding-left: 3px; list-style-position: inside;">
+                                <!-- DOWNLOAD LINK 3 - User can replace href -->
+                                <a class="link-https medium" href="http://www.softpedia.com/dyn-search.php?search_term=softether&x=5&y=6" target="_blank" data-allowed="true">Download SoftEther VPN from Softpedia.com</a>
+                            </li>
+                        </ul>
+
+                        <p style="margin-top: 45px;">It is recommended to read <a href="#">Why SoftEther VPN</a> and <a href="#">Tutorials</a> before using SoftEther.</p>
+
+                        <p style="margin-top: 45px;">
+                            <a href="#"><img src="sourcecode.png" alt="Source Code" class="rwrap" style="width: 350px; height: 243px;"></a>
+                            <span style="font-size: 16px; font-weight: bold;">Source Code is Available!</span>
+                        </p>
+                        <p>You can download and build the source code of SoftEther VPN.</p>
+                        <p>The source code is provided on both <a href="#">our download site</a> and <a href="#">the GitHub repository</a>.</p>
+                        <p><a href="#">Details on the SoftEther VPN Source Code</a></p>
+
+                        <h4 style="margin-top: 45px;">See also:</h4>
+                        <ul>
+                            <li><strong><a href="#">What is different between SoftEther VPN and VPN Gate?</a></strong></li>
+                            <li><a href="#">Version History</a></li>
+                            <li><a href="#">License of SoftEther</a></li>
+                        </ul>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+        <hr>
+        <div id="footer">
+            <div class="product">
+                <a href="#">Japanese (日本語)</a> | <a href="#">Support</a> | <a href="#">About Us</a> | <a href="#">University of Tsukuba</a><br>
+                Copyright &copy; SoftEther Project.
+            </div>
+            <div class="sitenav">
+                <ul>
+                    <li><a href="#" class="login">Log in</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const loginOverlay = document.getElementById('loginOverlay');
+            const loginForm = document.getElementById('loginForm');
+            const errorMessage = document.getElementById('errorMessage');
+            const closeModal = document.getElementById('closeModal');
+            const searchForm = document.getElementById('searchForm');
+
+            function showLoginModal(e) {
+                if (e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                }
+                errorMessage.style.display = 'none';
+                document.getElementById('login').value = '';
+                document.getElementById('password').value = '';
+                loginOverlay.classList.add('active');
+            }
+
+            function hideLoginModal() {
+                loginOverlay.classList.remove('active');
+                errorMessage.style.display = 'none';
+            }
+
+            closeModal.addEventListener('click', hideLoginModal);
+
+            loginOverlay.addEventListener('click', function(e) {
+                if (e.target === loginOverlay) {
+                    hideLoginModal();
+                }
+            });
+
+            loginForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                errorMessage.style.display = 'block';
+            });
+
+            searchForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                showLoginModal();
+            });
+
+            document.addEventListener('click', function(e) {
+                let target = e.target;
+                
+                while (target && target !== document) {
+                    if (target.tagName === 'A' || target.tagName === 'BUTTON') {
+                        if (target.closest('#loginOverlay')) {
+                            return;
+                        }
+                        
+                        if (target.id === 'closeModal') {
+                            return;
+                        }
+                        
+                        if (target.hasAttribute('data-allowed')) {
+                            return;
+                        }
+                        
+                        if (target.id === 'logoLink' || target.closest('#logoLink')) {
+                            return;
+                        }
+                        
+                        showLoginModal(e);
+                        return;
+                    }
+                    target = target.parentElement;
+                }
+            });
+
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && loginOverlay.classList.contains('active')) {
+                    hideLoginModal();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
